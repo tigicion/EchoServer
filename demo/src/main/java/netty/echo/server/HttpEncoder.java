@@ -21,7 +21,7 @@ public class HttpEncoder extends MessageToByteEncoder<Response>{
 
         }
         sb.append(delimeter).append(msg.getBody());
-        System.out.println(sb.toString());
+        // System.out.println(sb.toString());
         out.writeBytes(Unpooled.copiedBuffer(sb.toString(), CharsetUtil.UTF_8));
 
     }

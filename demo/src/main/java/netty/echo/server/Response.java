@@ -6,6 +6,8 @@ public class Response {
     private String protocal;
     private HashMap<String,String> head;
     private String body;
+    public Response(){
+    }
     public Response(String protocal, HashMap<String, String> head, String body){
         this.protocal=protocal;
         this.head=head;

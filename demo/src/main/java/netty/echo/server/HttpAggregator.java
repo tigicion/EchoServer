@@ -20,7 +20,7 @@ public class HttpAggregator extends MessageToMessageDecoder<ByteBuf>{
         String msg0 = msg.toString(CharsetUtil.UTF_8);
         
         if(state==0){
-            System.out.println(msg0);
+            // System.out.println(msg0);
             // System.out.println(msg0.equals("\r\n"));
             if(msg0.equals("\r\n")){
                 state=1;

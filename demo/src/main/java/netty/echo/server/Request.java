@@ -5,8 +5,9 @@ import java.util.HashMap;
 public class Request {
     private HashMap<String,String> head;
     private String body;
+
     public Request(HashMap<String, String> head, String body){
-        this.head=head;
+        this.head = new HashMap<>(head);
         this.body=body;
     }
     public HashMap<String, String> getHead() {

@@ -19,22 +19,24 @@ public class HttpDecoder extends ByteToMessageDecoder{
         // TODO Auto-generated method stub
         
         if(state==0){
-            int idx = indexof(in);
-            if(idx==-1) return;
-            ByteBuf msg = in.readRetainedSlice(idx+2-in.readerIndex());
-            String msg0 = msg.toString(CharsetUtil.UTF_8);
-        
-            if(msg0.equals("\r\n")){
-                state=1;
-                length = Integer.parseInt(head.get("Content-Length"));
-                return;
-            }
-            String[] res = msg0.split(":");
-            if(res.length==1){
-                head.put("protocal", res[0]);
-            }
-            else if(res.length>=2){
-                head.put(res[0].strip(), res[1].strip());
+            for(;;){
+                int idx = indexof(in);
+                if(idx==-1) return;
+                ByteBuf msg = in.readRetainedSlice(idx+2-in.readerIndex());
+                String msg0 = msg.toString(CharsetUtil.UTF_8);
+            
+                if(msg0.equals("\r\n")){
+                    state=1;
+                    length = Integer.parseInt(head.get("Content-Length"));
+                    return;
+                }
+                String[] res = msg0.split(":");
+                if(res.length==1){
+                    head.put("protocal", res[0].strip());
+                }
+                else if(res.length>=2){
+                    head.put(res[0].strip(), res[1].strip());
+                }
             }
             
         }
@@ -52,7 +54,7 @@ public class HttpDecoder extends ByteToMessageDecoder{
     }
 
     public void reset(){
-        this.head=null;
+        this.head.clear();
         this.body="";
         this.state=0;
         this.length=0;
